@@ -1,4 +1,5 @@
 import './bootstrap';
+import Alpine from 'alpinejs';
 
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
@@ -44,3 +45,30 @@ const editor = new EditorJS({
         }
     }
 });
+
+window.save = function (event) {
+    event.preventDefault();
+    const postStore = Alpine.store('post');
+    editor.save().then((outputData) => {
+        const formData = new FormData();
+        formData.set("title", postStore.title);
+        formData.set("slug", postStore.slug);
+        formData.set("content", JSON.stringify(outputData));
+        formData.set("is_published", postStore.is_published ? "1" : "0");
+        axios.post("/admin/post/store", formData).then((response) => {
+            window.location = "/admin/posts";
+        });
+    }).catch((error) => {
+        console.error('Saving failed: ', error);
+    })
+}
+
+Alpine.store('post', {
+    id: 0,
+    title: '',
+    slug: '',
+    content: '',
+    is_published: true
+});
+window.Alpine = Alpine
+Alpine.start()

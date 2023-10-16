@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
 use App\Models\Image;
+use Illuminate\Http\JsonResponse;
 
 class ImageController extends Controller
 {
@@ -27,7 +28,7 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreImageRequest $request)
+    public function store(StoreImageRequest $request): JsonResponse
     {
         $validated = $request->validated();
         $imageFile = $request->file('image');
@@ -36,12 +37,12 @@ class ImageController extends Controller
         $image->name = $validated['name'];
         $image->path = $path;
         $image->save();
-        return [
+        return response()->json([
             "success" => 1,
             "file" => [
                 "url" => asset($path)
             ]
-        ];
+        ]);
     }
 
     /**

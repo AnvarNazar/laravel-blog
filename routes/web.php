@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix("/admin")->group(function () {
     Route::get("/", [AdminController::class, "index"])->name("admin-page");
-    Route::prefix("/post")->group(function () {
+    Route::prefix("/posts")->group(function () {
         Route::get("/", [PostController::class, "index"])->name("admin-posts-page");
         Route::get("/create", [PostController::class, "create"])->name("admin-posts-create-page");
         Route::post("/store", [PostController::class, "store"])->name("admin-posts-store");
