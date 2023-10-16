@@ -19,6 +19,7 @@
         "@editorjs/editorjs": "^2.28.1",
         "@editorjs/embed": "^2.5.3",
         "@editorjs/header": "^2.7.0",
-        "@editorjs/list": "^1.8.0"
+        "@editorjs/list": "^1.8.0",
+        "alpinejs": "^3.13.1"
     }
 }
